@@ -6,9 +6,16 @@ import 'ol/ol.css';
 import Map from 'ol/Map';
 import Overlay from 'ol/Overlay';
 import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Style from 'ol/style/Style';
+import Feature from 'ol/Feature';
+import Icon from 'ol/style/Icon';
+import Point from 'ol/geom/Point';
 import View from 'ol/View';
 import XYZ from 'ol/source/XYZ';
-import {fromLonLat, toLonLat} from 'ol/proj';
+import {transform} from 'ol/proj';
+import {toLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
 
 // get html elements for rendering
@@ -77,14 +84,50 @@ map.on('singleclick', function (evt) {
   overlay.setPosition(coordinate);
 });
 
-// static coords to define marker, could be key value array for database hooking, taken from docs
-const viennapos = fromLonLat([16.3725, 48.208889]);
+// array of array, each subarray contain's longitude and lattitude
+const markerpos = [
+      [16.3725, 48.208889],
+      [30.1514, 20.10054]
+    ];
 
-// test marker, taken from docs
-const marker = new Overlay({
-  position: viennapos,
-  positioning: 'center-center',
-  element: document.getElementById('marker'),
-  stopEvent: false,
-});
-map.addOverlay(marker);
+// for (let [index, val] of markerpos.entries()) {
+  //    this["a"+index] = [];
+  //   marker[index] = new Overlay({
+    //     position: val,
+    //     positioning: 'center-center',
+    //     element: document.getElementById("marker"),
+    //     stopEvent: false,
+    //     });
+    // map.addOverlay(marker[index]);
+    // console.log(window['marker'+index])
+    // }
+    
+
+    function create_marker(pair) {
+      // split subarray
+      var lng = pair[0]
+      var lat = pair[1]
+
+      // the cool kids apparently do everything with vector layers, not marker layers
+      // allows us to assign conditionals to a vector
+      var vectorLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [new Feature({
+            geometry: new Point(transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
+          })]
+        }),
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 0.5],
+            anchorXUnits: "fraction",
+            anchorYUnits: "fraction",
+            src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg"
+          })
+        })
+      });
+      map.addLayer(vectorLayer);
+      console.log(pair)
+    }
+
+    // for each item in markerpos array, execute function
+    markerpos.forEach(create_marker)
