@@ -80,54 +80,61 @@ map.on('singleclick', function (evt) {
   // format to hemisphere, degrees, minutes, and seconds
   const hdms = toStringHDMS(toLonLat(coordinate));
 
-  content.innerHTML = '<p>co-ords:</p>' + hdms;
-  overlay.setPosition(coordinate);
+  // if there's a 'feature' (marker) on pixel, return it
+  var ifmark = map.forEachFeatureAtPixel(
+    evt.pixel,
+    function(ft){return ft;});
+
+  // double check it's a marker
+  if (ifmark && ifmark.get('type') == 'marker') { 
+    // change popup to show associated description of marker
+    content.innerHTML = '<p>'+ifmark.get('desc')+'<p>';
+    // show popup at coord
+    overlay.setPosition(coordinate);
+  } else {   
+    // print coords otherwise
+    content.innerHTML = '<p>co-ords:</p>' + hdms;
+    overlay.setPosition(coordinate); }
 });
 
 // array of array, each subarray contain's longitude and lattitude
 const markerpos = [
-      [16.3725, 48.208889],
-      [30.1514, 20.10054]
+      [16.3725, 48.208889, 'vienna'],
+      [30.1514, 20.10054, 'test coord']
     ];
 
-// for (let [index, val] of markerpos.entries()) {
-  //    this["a"+index] = [];
-  //   marker[index] = new Overlay({
-    //     position: val,
-    //     positioning: 'center-center',
-    //     element: document.getElementById("marker"),
-    //     stopEvent: false,
-    //     });
-    // map.addOverlay(marker[index]);
-    // console.log(window['marker'+index])
-    // }
-    
-
-    function create_marker(pair) {
+    function create_marker(tuple) {
       // split subarray
-      var lng = pair[0]
-      var lat = pair[1]
+      var lng = tuple[0]
+      var lat = tuple[1]
+      var desc = tuple[2]
 
       // the cool kids apparently do everything with vector layers, not marker layers
-      // allows us to assign conditionals to a vector
       var vectorLayer = new VectorLayer({
         source: new VectorSource({
+          // features are THE new markers nowadays (these are the invisible markers)
           features: [new Feature({
+            type: 'marker',
+            desc: desc,
             geometry: new Point(transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
           })]
         }),
+        // this makes it not invisible
         style: new Style({
           image: new Icon({
             anchor: [0.5, 0.5],
             anchorXUnits: "fraction",
             anchorYUnits: "fraction",
+            // should change this at some point, wikimedia is cc but still
             src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg"
           })
         })
       });
       map.addLayer(vectorLayer);
-      console.log(pair)
+      // debug if parse or not
+      console.log(tuple)
     }
-
+  
     // for each item in markerpos array, execute function
     markerpos.forEach(create_marker)
+  
