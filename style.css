@@ -49,9 +49,9 @@ html, body, .map {
   /* affect's only the middle, not the transparent edges */
   border-top-color: white;
   /* offset's the popup above and to the left of the click area */
-  left: 48px;
+  left: 35px;
   top: 100%;
-  content: "O"; 
+  content: "X"; 
 }
 
 /* close button */
