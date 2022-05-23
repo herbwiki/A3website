@@ -1,5 +1,5 @@
-# A3website
-website for assignment 3 Intro to Information Technology, currently features:
+# prototype
+prototype for A3 IIT, currently features:
 <br>
 
 <li>Demo of HerbDB functional prototype</li>
