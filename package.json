@@ -1,6 +1,7 @@
 {
-  "name": "src",
+  "name": "herbgardenz",
   "version": "1.0.0",
+  "main": "",
   "scripts": {
     "start": "vite",
     "build": "vite build"
