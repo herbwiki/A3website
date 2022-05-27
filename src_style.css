@@ -48,7 +48,7 @@
   /* offset's the popup above and to the left of the click area */
   left: 35px;
   top: 100%;
-  content: "X"; 
+  content: ""; 
 }
 
 /* close button */
