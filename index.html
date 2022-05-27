@@ -10,14 +10,41 @@
     
   </head>
   
-  <body>
+<body>
+  <div>
+  <div class="navbar bg-base-100">
+    <div class="navbar-start">
+      <a class="btn btn-ghost normal-case text-xl">HerbGarden</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal focus:bg-teal-200 p-0">
+        <li><a>Herbs</a></li>
+        <li><a>Map</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <div class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img class="scale-[3]" src="https://freesvg.org/img/1464710523.png"/>
+        </div>
+      </div>
+      <div class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img src="https://toppng.com/uploads/preview/stock-person-png-stock-photo-man-11563049686zqeb9zmqjd.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+
     <!-- openlayers canvas here -->
-    <div id="map" class="map"></div>
-    <!-- popup canvas' -->
+    <div id="map" class="pb-10 pr-10 pl-10 pt-5" style="height: 90vh;"></div>
+    <!-- popup canvas -->
     <div id="popup" class="ol-popup">
       <a href="\" id="popup-closer" class="ol-popup-closer">X</a>
       <div id="popup-content"></div>
     </div>
+    </div>
   </body>
 
 </html>
+

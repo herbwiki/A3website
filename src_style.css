@@ -1,0 +1,60 @@
+@import "node_modules/ol/ol.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* map size */
+.map {
+  width: 90%;
+  height: 90%;
+}
+/* center div, map settings*/
+
+/* marker design */
+#marker {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #088;
+  border-radius: 10px;
+  background-color: rgb(234, 0, 255);
+  opacity: 0.8;
+}
+
+/* main popup box */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+}
+
+/* where the user clicks */
+/* before after affect the edges of an object */
+.ol-popup:after, .ol-popup:before {
+  /* hides edges so appears diagonal */
+  border: solid transparent;
+  border-width: 10px;
+  /* cut's off the diagonal without a 0,0 size, i rlly dunno */
+  height: 0;
+  width: 0;
+  position: absolute;
+  /* affect's only the middle, not the transparent edges */
+  border-top-color: white;
+  /* offset's the popup above and to the left of the click area */
+  left: 35px;
+  top: 100%;
+  content: "X"; 
+}
+
+/* close button */
+.ol-popup-closer {
+  /* text-decoration: none; */
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
