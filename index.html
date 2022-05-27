@@ -6,8 +6,10 @@
     
     <!-- import js and css -->
     <script defer type="module" src="/main.js"></script>
+    <script type="module">import {coordinatefn} from "/main.js"</script>
     <link rel="stylesheet" href="/style.css">
-    
+
+
   </head>
   
 <body>
@@ -24,7 +26,7 @@
     </div>
     <div class="navbar-end">
       <div class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full">
+        <div onclick="input_open(true)" class="w-10 rounded-full">
           <img class="scale-[1.4]" src="https://freesvg.org/img/1464710523.png"/>
         </div>
       </div>
@@ -43,6 +45,62 @@
       <a href="\" id="popup-closer" class="ol-popup-closer">X</a>
       <div id="popup-content"></div>
     </div>
+
+
+    
+
+    <div>
+      <div id="shadow" class=" hidden absolute inset-0 bg-black bg-opacity-30 h-screen w-full flex justify-center items-start md:items-center pt-10 md:pt-0">
+        <div id="inputol" class="opacity-0 transform -translate-y-50 scale-150 relative w-10/12 md:w-1/4 h-1/2 md:h-3/4 bg-white rounded shadow-lg transition-opacity transition-transform duration-300"> 
+           <a href="/" id="input-closer" class="ol-popup-closer">X</a>
+            <div class="px-4 py-3 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-600">Input</h2>
+            </div>
+
+            <div class="ml-5 mt-5">
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Example question?</span>
+              </label>
+              <input type="text" placeholder="Input here.." class="input input-bordered w-full max-w-xs" />
+              <label class="label">
+              </label>
+            </div>
+            </div>
+
+
+
+            <div class="absolute bottom-0 left-0 px-4 py-3 border-t border-gray-200 w-full flex justify-between items-center gap-3"> <button class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white focus:outline-none">Save</button> <button onclick="input_open(false)" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white focus:outline-none">Close</button> </div>
+            <!-- <button onclick="input_open(false)" class="absolute -top-3 -right-3 bg-red-500 hover:bg-red-600 text-2xl w-8 h-8 rounded-full focus:outline-none text-white"></button> -->
+            <!-- <i> class='text-m'>x</i>  -->
+
+            <script>
+              
+
+              function input_open(value){
+              const inputCL = inputol.classList
+          
+              if(value){
+              shadow.classList.remove('hidden')
+              setTimeout(() => {
+                  inputCL.remove('opacity-0')
+                  inputCL.remove('-translate-y-full')
+                  inputCL.remove('scale-150')
+              }, 100);
+              } else {
+              inputCL.add('-translate-y-full')
+              setTimeout(() => {
+                  inputCL.add('opacity-0')
+                  inputCL.add('scale-150')
+              }, 100);
+              setTimeout(() => shadow.classList.add('hidden'), 300);
+              }
+          }
+            </script>
+        </div>
+    </div>
+    </div>
+
     </div>
   </body>
 

@@ -22,6 +22,7 @@ import {toStringHDMS} from 'ol/coordinate';
 const container = document.getElementById('popup');
 const content = document.getElementById('popup-content');
 const closer = document.getElementById('popup-closer');
+const inputclose = document.getElementById('input-closer');
 
 // render popup to popup container
 const overlay = new Overlay({
@@ -39,6 +40,14 @@ const overlay = new Overlay({
 closer.onclick = function () {
   overlay.setPosition(undefined);
   closer.blur();
+  return false;
+};
+
+// click handler to close popup
+// return false to not follow href
+inputclose.onclick = function () {
+  input_open(false);
+  inputclose.blur();
   return false;
 };
 
@@ -93,7 +102,9 @@ map.on('singleclick', function (evt) {
     overlay.setPosition(coordinate);
   } else {   
     // print coords otherwise
-    content.innerHTML = '<p>co-ords:</p>' + hdms;
+    content.innerHTML = '<p>co-ords:</p><br>'
+    + '<a class="text-green-500" onclick="input_open(true)"id="inputlink">click here to add a herb</a><br>'
+    + hdms;
     overlay.setPosition(coordinate); }
 });
 
@@ -137,4 +148,7 @@ const markerpos = [
   
     // for each item in markerpos array, execute function
     markerpos.forEach(create_marker)
+
+
+
   
